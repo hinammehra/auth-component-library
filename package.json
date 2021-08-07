@@ -1,34 +1,55 @@
 {
-  "name": "auth-component-library",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.5.0",
-    "@testing-library/user-event": "^7.2.1",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-scripts": "3.4.3"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
+    "name": "@hinammehra/auth-component-library",
+    "files": [
+        "./dist"
     ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  }
+    "publishConfig": {
+        "registry": "https://npm.pkg.github.com"
+    },
+    "repository": "git://github.com/hinammehra/auth-component-library",
+    "version": "0.1.1",
+    "main": "dist/index.cjs.js",
+    "module": "dist/index.esm.js",
+    "source": "src/index.js",
+    "dependencies": {
+        "react-scripts": "3.4.3"
+    },
+    "scripts": {
+        "build": "rollup -c",
+        "build-watch": "rollup -c -w",
+        "start-playground": "cd playground && npm run start",
+        "i-all": "npm i && cd playground && npm i",
+        "dev": "npm-run-all --parallel build-watch start-playground"
+    },
+    "eslintConfig": {
+        "extends": "react-app"
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    },
+    "devDependencies": {
+        "@babel/cli": "^7.10.5",
+        "@babel/core": "^7.11.4",
+        "@babel/preset-env": "^7.11.0",
+        "@babel/preset-react": "^7.10.4",
+        "@rollup/plugin-babel": "^5.2.0",
+        "npm-run-all": "^4.1.5",
+        "rollup": "^2.26.4",
+        "rollup-plugin-delete": "^2.0.0",
+        "rollup-plugin-peer-deps-external": "^2.2.3"
+    },
+    "peerDependencies": {
+        "@material-ui/core": "^4.10.2",
+        "react": "^16.13.1",
+        "react-dom": "^16.13.1"
+    }
 }
