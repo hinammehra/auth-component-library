@@ -3,15 +3,17 @@
     "version": "0.1.0",
     "private": true,
     "dependencies": {
+        "@material-ui/core": "file:../node_modules/@material-ui/core",
+        "@material-ui/icons": "file:../node_modules/@material-ui/icons",
         "@testing-library/jest-dom": "^4.2.4",
         "@testing-library/react": "^9.5.0",
         "@testing-library/user-event": "^7.2.1",
         "auth-component-library": "file:..",
+        "formik": "file:../node_modules/formik",
+        "yup": "file:../node_modules/yup",
         "react": "file:../node_modules/react",
         "react-dom": "file:../node_modules/react-dom",
-        "react-scripts": "3.4.3",
-        "@material-ui/core": "file:../node_modules/@material-ui/core",
-        "@material-ui/icons": "file:../node_modules/@material-ui/icons"
+        "react-scripts": "3.4.3"
     },
     "scripts": {
         "start": "react-scripts start",

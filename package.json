@@ -48,8 +48,10 @@
         "rollup-plugin-peer-deps-external": "^2.2.3"
     },
     "peerDependencies": {
-        "@material-ui/icons": "^4.11.2",
         "@material-ui/core": "^4.10.2",
+        "@material-ui/icons": "^4.11.2",
+        "formik": "^2.2.9",
+        "yup": "^0.32.9",
         "react": "^16.13.1",
         "react-dom": "^16.13.1"
     }
