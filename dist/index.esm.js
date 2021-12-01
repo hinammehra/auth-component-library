@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { object, string } from 'yup';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import { Formik, Form, Field } from 'formik';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
 
 function HelloWorld() {
   return /*#__PURE__*/React.createElement("h1", null, "Hello World 123");
@@ -115,7 +116,6 @@ function SignIn(_ref) {
   };
 
   var handleSubmit = function handleSubmit(values) {
-    setToken("hello");
     fetch(authUrl, {
       method: 'POST',
       headers: {
@@ -127,7 +127,7 @@ function SignIn(_ref) {
     }).then(function (data) {
       setToken(data.accessToken);
     }).catch(function (error) {
-      console.error('Error:', error);
+      setError(error);
     });
   };
 
@@ -186,4 +186,163 @@ function SignIn(_ref) {
   })));
 }
 
-export { HelloWorld, SignIn };
+var useStyles$1 = makeStyles(function (theme) {
+  return {
+    paper: {
+      marginTop: theme.spacing(8),
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center'
+    },
+    avatar: {
+      margin: theme.spacing(1),
+      backgroundColor: theme.palette.secondary.main
+    },
+    form: {
+      width: '100%',
+      // Fix IE 11 issue.
+      marginTop: theme.spacing(1)
+    },
+    submit: {
+      margin: theme.spacing(3, 0, 2)
+    }
+  };
+});
+function Profile(_ref) {
+  var profileURL = _ref.profileURL;
+
+  var _useState = useState(null),
+      _useState2 = _slicedToArray(_useState, 2),
+      message = _useState2[0],
+      setMessage = _useState2[1];
+
+  var _useState3 = useState({
+    firstName: '',
+    lastName: '',
+    email: ''
+  }),
+      _useState4 = _slicedToArray(_useState3, 2),
+      profile = _useState4[0],
+      setProfile = _useState4[1];
+
+  var classes = useStyles$1();
+  useEffect(function () {
+    fetch(profileURL).then(function (response) {
+      return response.json();
+    }).then(function (data) {
+      setProfile(data);
+    }).catch(function (error) {
+      setMessage({
+        "message": "Sorry, we encountered an error while getting your profile.",
+        "type": "error"
+      });
+    });
+  }, [profileURL]);
+
+  var handleSubmit = function handleSubmit(values) {
+    fetch(profileURL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(values)
+    }).then(function (response) {
+      return response.json();
+    }).then(function (data) {
+      setMessage({
+        "message": "Profile updated successfully",
+        "type": "success"
+      });
+    }).catch(function (error) {
+      setMessage({
+        "message": "Sorry, we encountered an error while updating your profile.",
+        "type": "error"
+      });
+    });
+  };
+
+  return /*#__PURE__*/React.createElement(Container, {
+    component: "main",
+    maxWidth: "xs"
+  }, /*#__PURE__*/React.createElement(CssBaseline, null), /*#__PURE__*/React.createElement("div", {
+    className: classes.paper
+  }, /*#__PURE__*/React.createElement(Avatar, {
+    className: classes.avatar
+  }, /*#__PURE__*/React.createElement(LockOutlinedIcon, null)), /*#__PURE__*/React.createElement(Typography, {
+    component: "h1",
+    variant: "h5"
+  }, "Profile"), /*#__PURE__*/React.createElement(Formik, {
+    initialValues: profile,
+    enableReinitialize: true,
+    onSubmit: handleSubmit
+  }, function (_ref2) {
+    var errors = _ref2.errors,
+        touched = _ref2.touched,
+        isSubmitting = _ref2.isSubmitting;
+    return /*#__PURE__*/React.createElement(Form, null, /*#__PURE__*/React.createElement(Grid, {
+      container: true,
+      spacing: 2
+    }, /*#__PURE__*/React.createElement(Grid, {
+      item: true,
+      xs: 12,
+      sm: 6
+    }, /*#__PURE__*/React.createElement(Field, {
+      label: "First Name",
+      name: "firstName",
+      type: "input",
+      variant: "outlined",
+      margin: "normal",
+      id: "firstName",
+      autoComplete: "firstName",
+      autoFocus: true,
+      fullWidth: true,
+      as: TextField,
+      helperText: touched.firstName && errors.firstName,
+      error: Boolean(touched.firstName && errors.firstName)
+    })), /*#__PURE__*/React.createElement(Grid, {
+      item: true,
+      xs: 12,
+      sm: 6
+    }, /*#__PURE__*/React.createElement(Field, {
+      label: "Last Name",
+      name: "lastName",
+      type: "input",
+      variant: "outlined",
+      margin: "normal",
+      id: "lastName",
+      autoComplete: "lastName",
+      autoFocus: true,
+      fullWidth: true,
+      as: TextField,
+      helperText: touched.lastName && errors.lastName,
+      error: Boolean(touched.lastName && errors.lastName)
+    })), /*#__PURE__*/React.createElement(Grid, {
+      item: true,
+      xs: 12,
+      sm: 12
+    }, /*#__PURE__*/React.createElement(Field, {
+      label: "Email",
+      name: "email",
+      type: "input",
+      variant: "outlined",
+      margin: "normal",
+      id: "email",
+      autoComplete: "email",
+      autoFocus: true,
+      fullWidth: true,
+      as: TextField,
+      helperText: touched.email && errors.email,
+      error: Boolean(touched.email && errors.email)
+    }))), /*#__PURE__*/React.createElement(Button, {
+      type: "submit",
+      fullWidth: true,
+      variant: "contained",
+      color: "primary",
+      size: "large",
+      className: classes.submit,
+      disabled: isSubmitting
+    }, "Save Changes"));
+  })));
+}
+
+export { HelloWorld, Profile, SignIn };

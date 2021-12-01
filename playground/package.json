@@ -10,10 +10,12 @@
         "@testing-library/user-event": "^7.2.1",
         "auth-component-library": "file:..",
         "formik": "file:../node_modules/formik",
-        "yup": "file:../node_modules/yup",
+        "history": "^5.1.0",
         "react": "file:../node_modules/react",
         "react-dom": "file:../node_modules/react-dom",
-        "react-scripts": "3.4.3"
+        "react-router-dom": "^6.0.2",
+        "react-scripts": "3.4.3",
+        "yup": "file:../node_modules/yup"
     },
     "scripts": {
         "start": "react-scripts start",

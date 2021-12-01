@@ -7,7 +7,7 @@
         "registry": "https://npm.pkg.github.com"
     },
     "repository": "git://github.com/hinammehra/auth-component-library",
-    "version": "0.1.1",
+    "version": "1.0.0",
     "main": "dist/index.cjs.js",
     "module": "dist/index.esm.js",
     "source": "src/index.js",

@@ -13,6 +13,7 @@ var Typography = require('@material-ui/core/Typography');
 var formik = require('formik');
 var TextField = require('@material-ui/core/TextField');
 var Button = require('@material-ui/core/Button');
+var Grid = require('@material-ui/core/Grid');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
@@ -24,6 +25,7 @@ var LockOutlinedIcon__default = /*#__PURE__*/_interopDefaultLegacy(LockOutlinedI
 var Typography__default = /*#__PURE__*/_interopDefaultLegacy(Typography);
 var TextField__default = /*#__PURE__*/_interopDefaultLegacy(TextField);
 var Button__default = /*#__PURE__*/_interopDefaultLegacy(Button);
+var Grid__default = /*#__PURE__*/_interopDefaultLegacy(Grid);
 
 function HelloWorld() {
   return /*#__PURE__*/React__default['default'].createElement("h1", null, "Hello World 123");
@@ -130,7 +132,6 @@ function SignIn(_ref) {
   };
 
   var handleSubmit = function handleSubmit(values) {
-    setToken("hello");
     fetch(authUrl, {
       method: 'POST',
       headers: {
@@ -142,7 +143,7 @@ function SignIn(_ref) {
     }).then(function (data) {
       setToken(data.accessToken);
     }).catch(function (error) {
-      console.error('Error:', error);
+      setError(error);
     });
   };
 
@@ -201,5 +202,165 @@ function SignIn(_ref) {
   })));
 }
 
+var useStyles$1 = styles.makeStyles(function (theme) {
+  return {
+    paper: {
+      marginTop: theme.spacing(8),
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center'
+    },
+    avatar: {
+      margin: theme.spacing(1),
+      backgroundColor: theme.palette.secondary.main
+    },
+    form: {
+      width: '100%',
+      // Fix IE 11 issue.
+      marginTop: theme.spacing(1)
+    },
+    submit: {
+      margin: theme.spacing(3, 0, 2)
+    }
+  };
+});
+function Profile(_ref) {
+  var profileURL = _ref.profileURL;
+
+  var _useState = React.useState(null),
+      _useState2 = _slicedToArray(_useState, 2),
+      message = _useState2[0],
+      setMessage = _useState2[1];
+
+  var _useState3 = React.useState({
+    firstName: '',
+    lastName: '',
+    email: ''
+  }),
+      _useState4 = _slicedToArray(_useState3, 2),
+      profile = _useState4[0],
+      setProfile = _useState4[1];
+
+  var classes = useStyles$1();
+  React.useEffect(function () {
+    fetch(profileURL).then(function (response) {
+      return response.json();
+    }).then(function (data) {
+      setProfile(data);
+    }).catch(function (error) {
+      setMessage({
+        "message": "Sorry, we encountered an error while getting your profile.",
+        "type": "error"
+      });
+    });
+  }, [profileURL]);
+
+  var handleSubmit = function handleSubmit(values) {
+    fetch(profileURL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(values)
+    }).then(function (response) {
+      return response.json();
+    }).then(function (data) {
+      setMessage({
+        "message": "Profile updated successfully",
+        "type": "success"
+      });
+    }).catch(function (error) {
+      setMessage({
+        "message": "Sorry, we encountered an error while updating your profile.",
+        "type": "error"
+      });
+    });
+  };
+
+  return /*#__PURE__*/React__default['default'].createElement(Container__default['default'], {
+    component: "main",
+    maxWidth: "xs"
+  }, /*#__PURE__*/React__default['default'].createElement(CssBaseline__default['default'], null), /*#__PURE__*/React__default['default'].createElement("div", {
+    className: classes.paper
+  }, /*#__PURE__*/React__default['default'].createElement(Avatar__default['default'], {
+    className: classes.avatar
+  }, /*#__PURE__*/React__default['default'].createElement(LockOutlinedIcon__default['default'], null)), /*#__PURE__*/React__default['default'].createElement(Typography__default['default'], {
+    component: "h1",
+    variant: "h5"
+  }, "Profile"), /*#__PURE__*/React__default['default'].createElement(formik.Formik, {
+    initialValues: profile,
+    enableReinitialize: true,
+    onSubmit: handleSubmit
+  }, function (_ref2) {
+    var errors = _ref2.errors,
+        touched = _ref2.touched,
+        isSubmitting = _ref2.isSubmitting;
+    return /*#__PURE__*/React__default['default'].createElement(formik.Form, null, /*#__PURE__*/React__default['default'].createElement(Grid__default['default'], {
+      container: true,
+      spacing: 2
+    }, /*#__PURE__*/React__default['default'].createElement(Grid__default['default'], {
+      item: true,
+      xs: 12,
+      sm: 6
+    }, /*#__PURE__*/React__default['default'].createElement(formik.Field, {
+      label: "First Name",
+      name: "firstName",
+      type: "input",
+      variant: "outlined",
+      margin: "normal",
+      id: "firstName",
+      autoComplete: "firstName",
+      autoFocus: true,
+      fullWidth: true,
+      as: TextField__default['default'],
+      helperText: touched.firstName && errors.firstName,
+      error: Boolean(touched.firstName && errors.firstName)
+    })), /*#__PURE__*/React__default['default'].createElement(Grid__default['default'], {
+      item: true,
+      xs: 12,
+      sm: 6
+    }, /*#__PURE__*/React__default['default'].createElement(formik.Field, {
+      label: "Last Name",
+      name: "lastName",
+      type: "input",
+      variant: "outlined",
+      margin: "normal",
+      id: "lastName",
+      autoComplete: "lastName",
+      autoFocus: true,
+      fullWidth: true,
+      as: TextField__default['default'],
+      helperText: touched.lastName && errors.lastName,
+      error: Boolean(touched.lastName && errors.lastName)
+    })), /*#__PURE__*/React__default['default'].createElement(Grid__default['default'], {
+      item: true,
+      xs: 12,
+      sm: 12
+    }, /*#__PURE__*/React__default['default'].createElement(formik.Field, {
+      label: "Email",
+      name: "email",
+      type: "input",
+      variant: "outlined",
+      margin: "normal",
+      id: "email",
+      autoComplete: "email",
+      autoFocus: true,
+      fullWidth: true,
+      as: TextField__default['default'],
+      helperText: touched.email && errors.email,
+      error: Boolean(touched.email && errors.email)
+    }))), /*#__PURE__*/React__default['default'].createElement(Button__default['default'], {
+      type: "submit",
+      fullWidth: true,
+      variant: "contained",
+      color: "primary",
+      size: "large",
+      className: classes.submit,
+      disabled: isSubmitting
+    }, "Save Changes"));
+  })));
+}
+
 exports.HelloWorld = HelloWorld;
+exports.Profile = Profile;
 exports.SignIn = SignIn;

@@ -1,35 +1,33 @@
-import React, { createContext, useState } from 'react';
+import React from 'react';
 import { AuthContext, AuthProvider } from './contexts/authContext';
-
-import { SignIn } from 'auth-component-library';
-
-// const AuthContext = createContext({
-//     token: null,
-//     setToken: (auth) => {}
-//   });
-
-// const AuthProvider = ({ children }) => {
-//     const [token, setToken] = useState(null)
-
-//     return (
-//         <AuthContext.Provider value={{token, setToken}}>
-//             <div> Token: { token } </div>
-//             {children}
-//         </AuthContext.Provider>
-//     )
-// }
-
+import {
+    BrowserRouter,
+    Routes,
+    Route
+  } from "react-router-dom";
+  
+import { SignIn, Profile } from 'auth-component-library';
 
 const App = ()  => {
 
+    const mockAPI = 'http://localhost:3000'
+
     return (
-        <AuthProvider>
-            <SignIn 
-                authContext={ AuthContext } 
-                authUrl=''
-                redirectUrl={window.location.origin}
-            />
-        </AuthProvider>
+        <BrowserRouter>
+            <Routes>
+                <Route path="/sign-in" element={
+                    <SignIn 
+                        authContext={ AuthContext } 
+                        authUrl={ `${mockAPI}/auth` } 
+                    />} 
+                />
+                <Route path="/profile" element={
+                    <Profile
+                        profileURL={ `${mockAPI}/profile` } 
+                    />}
+                />
+            </Routes>
+        </BrowserRouter>
     );
 }
 
